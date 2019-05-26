@@ -1,0 +1,60 @@
+ <!DOCTYPE html>
+ <html lang="ko">
+  <head>
+    <title>Chatting B05</title>
+  </head>
+  <body>
+    <center>
+      <h1 style='color: #ffcc33'>Chatting B05</h1>
+      <h3 style='color: #ccc;font-size: 25px;'>No message yet..</h3>
+      <!-- 아이디와 메세지를 입력받는다. -->
+      <div class="message_holder"></div>
+      <br>
+      <form action="" method="POST">
+        <input type="text" class="username" placeholder="아이디"/>
+        <input type="text" class="message" placeholder="메세지를 입력하세요."/>
+        <input type="submit"/>
+      </form>
+    </center>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+    <script type="text/javascript">
+
+      var socket = io.connect('http://' + document.domain + ':' + location.port); //실시간 페이지 url
+
+      socket.on( 'connect', function() {
+        socket.emit( 'my event', {
+          data: 'User Connected'
+        })  
+        var form = $( 'form' ).on( 'submit', function( e ) {
+          e.preventDefault()
+          let user_input = $( 'input.message' ).val()
+          if($( 'input.username' ).val()==""){
+            let user_name = $( 'input.username' ).val('익명')
+          }
+          else{
+            let user_name = $( 'input.username' ).val()
+          }
+          socket.emit( 'my event', {
+            user_name : user_name,
+            message : user_input
+          } )
+          //유저 이름과 메세지를 받아서 채팅 입력창으로 보냄
+          $( 'input.message' ).val( '' ).focus()
+          //메세지 초기화
+        } )
+      } )
+      socket.on( 'my response', function( msg ) {
+        console.log( msg )
+        if( typeof msg.user_name !== 'undefined' ) {
+          $( 'h3' ).remove()
+          $( 'div.message_holder' ).append( '<div><b style="color: #000">'+msg.user_name+'</b> '+msg.message+'</div>' )
+        }
+      })
+    </script>
+
+  </body>
+  </html>
