@@ -41,7 +41,10 @@
   margin: auto;
   background-color: white;
   text-align: right;
+  border-style: solid;
+  padding-top: 2px;
   border-radius: 5px;
+  border-width: thin ;
   margin-top: 10px;
 }
 
