@@ -1,30 +1,33 @@
-/* 설치한 express 모듈 불러오기 */
-const express = require('express')
-
-/* 설치한 socket.io 모듈 불러오기 */
-const socket = require('socket.io')
+/* 설치한 express와 socket.io모듈 불러오기 */
+var express = require('express');
+var socket = require('socket.io');
 
 /* Node.js 기본 내장 모듈 불러오기 */
-const http = require('http')
-
-/* Node.js 기본 내장 모듈 불러오기 */
-const fs = require('fs')
+var http = require('http');
+var fs = require('fs');
 
 /* express 객체 생성 */
-const app = express()
+var app = express();
+
+/*sqlite3를 불러와서 부팅과정 중 텍스트 모드로 변환*/
+var sqlite = require('sqlite3').verbose();
+/*userinfo라는 db 생성, 없으면 만들어주고 있으면 overwrite*/
+let db = new sqlite.Database('userinfo.db');
+db.run('CREATE TABLE IF NOT EXISTS userinfo(email text NOT NULL,username text NOT NULL,password text NOT NULL)');
 
 /* express http 서버 생성 */
-const server = http.createServer(app)
+var server = http.createServer(app);
+var io = socket(server);
 
-/* 생성된 서버를 socket.io에 바인딩 */
-const io = socket(server)
 
+// app.use(cookieParser()); //사용자의 쿠키 내역 가져옴.
 app.use('/css', express.static('./public/css'))
 app.use('/js', express.static('./public/js'))
+app.use(express.json())
 
 /* Get 방식으로 / 경로에 접속하면 실행 됨 */
 app.get('/', function(request, response) {
-  fs.readFile('./public/index.html', function(err, data) {
+  fs.readFile('./public/login.html', function(err, data) {
     if(err) {
       response.send('에러')
     } else {
@@ -34,6 +37,52 @@ app.get('/', function(request, response) {
     }
   })
 })
+
+app.get('/register', function(request, response) {
+  fs.readFile('./public/register.html', function(err, data) {
+    if(err) {
+      response.send('에러')
+    } else {
+      response.writeHead(200, {'Content-Type':'text/html'})
+      response.write(data)
+      response.end()
+    }
+  })
+})
+
+
+/*post 방식으로 보내주면 페이지는 로그인 페이지로 이동*/
+app.post('/login', function(request,response){
+  var username = request.body.username;
+  var password = request.body.password;
+  let sql = 'SELECT * FROM userinfo WHERE (username = "${requset.body.username}")';
+  db.all(sql, function(err, rows){
+    rows.forEach(function(row){
+      if(row.password==password){
+        response.redirect('/chat');
+      }
+      else{
+        response.send('일치하는 정보가 존재하지 않습니다.');
+      }
+    })
+  })
+  db.close();
+})
+
+app.post('/register', function(request, response){
+  console.log('i am in register')
+  db.run('INSERT INTO userinfo(email,username,password) values("${request.body.email}","${request.body.username}","${requset.body.password}")',function(err){
+    if(err){
+      return console.log(err.message);
+    }
+    console.log('Rows inserted', request.body.username, request.body.password);
+    response.redirect('/login');
+  })
+  db.close();
+})
+
+
+
 
 io.sockets.on('connection', function(socket) {
 
