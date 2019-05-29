@@ -13,7 +13,7 @@ var app = express();
 var sqlite = require('sqlite3').verbose();
 /*userinfo라는 db 생성, 없으면 만들어주고 있으면 overwrite*/
 let db = new sqlite.Database('userinfo.db');
-db.run('CREATE TABLE IF NOT EXISTS userinfo(email text NOT NULL,username text NOT NULL,password text NOT NULL)');
+db.run('CREATE TABLE IF NOT EXISTS userinfo(email text NOT NULL UNIQUE,username text NOT NULL UNIQUE,password text NOT NULL)');
 
 /* express http 서버 생성 */
 var server = http.createServer(app);
@@ -53,12 +53,12 @@ app.get('/register', function(request, response) {
 
 /*post 방식으로 보내주면 페이지는 로그인 페이지로 이동*/
 app.post('/login', function(request,response){
-  var username = request.body.username;
-  var password = request.body.password;
-  let sql = 'SELECT * FROM userinfo WHERE (username = "${requset.body.username}")';
+  var name = request.body.username;
+  var pw = request.body.password;
+  let sql = 'SELECT * FROM userinfo WHERE (username = name)';
   db.all(sql, function(err, rows){
     rows.forEach(function(row){
-      if(row.password==password){
+      if(row.password==pw){
         response.redirect('/chat');
       }
       else{
@@ -70,7 +70,7 @@ app.post('/login', function(request,response){
 })
 
 app.post('/register', function(request, response){
-  console.log('i am in register')
+  console.log('i am in re:gister')
   db.run('INSERT INTO userinfo(email,username,password) values("${request.body.email}","${request.body.username}","${requset.body.password}")',function(err){
     if(err){
       return console.log(err.message);
