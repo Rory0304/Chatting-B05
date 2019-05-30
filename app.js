@@ -24,8 +24,8 @@ var io = socket(server);
 // app.use(cookieParser()); //사용자의 쿠키 내역 가져옴.
 app.use('/css', express.static('./public/css'))
 app.use('/js', express.static('./public/js'))
-app.use(express.json())
 app.use(bodyParser.urlencoded({extended: false}));
+
 
 /* Get 방식으로 / 경로에 접속하면 실행 됨 */
 app.get('/', function(request, response) {
@@ -52,23 +52,37 @@ app.get('/register', function(request, response) {
   })
 })
 
+app.get('/login', function(request, response) {
+  fs.readFile('./public/login.html', function(err, data) {
+    if(err) {
+      response.send('에러')
+    } else {
+      response.writeHead(200, {'Content-Type':'text/html'})
+      response.write(data)
+      response.end()
+    }
+  })
+})
+
 
 /*post 방식으로 보내주면 페이지는 로그인 페이지로 이동*/
 app.post('/login', function(request,response){
   var name = request.body.username;
   var pw = request.body.password;
-  let sql = 'SELECT * FROM userinfo WHERE (username = name)';
-  db.all(sql, function(err, rows){
-    rows.forEach(function(row){
-      if(row.password==pw){
-        response.redirect('/chat');
-      }
-      else{
-        response.send('일치하는 정보가 존재하지 않습니다.');
-      }
-    })
-  })
-  db.close();
+  console.log('success!');
+  response.redirect('')
+  // let sql = 'SELECT * FROM userinfo WHERE (username = name)';
+  // db.all(sql, function(err, rows){
+  //   rows.forEach(function(row){
+  //     if(row.password==pw){
+  //       response.redirect('/chat');
+  //     }
+  //     else{
+  //       response.send('일치하는 정보가 존재하지 않습니다.');
+  //     }
+  //   })
+  // })
+  // db.close();
 })
 
 app.post('/register', function(request, response){
@@ -77,10 +91,10 @@ app.post('/register', function(request, response){
     if(err){
       return console.log(err.message);
     }
-    console.log('Rows inserted', request.body.username, request.body.password);
+    console.log('Rows inserted',  request.body.email, request.body.username, request.body.password);
     response.redirect('/login');
+    db.close();
   })
-  db.close();
 })
 
 

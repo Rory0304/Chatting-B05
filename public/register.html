@@ -9,12 +9,36 @@
     <div align="center">
     <form action="/register" method="POST">
       <!--post 방식으로 접속-->
-      <h3> Email : <input type = "text" id="email" name="email"></h3>
-      <h3> Username : <input type="text" id="username" name="username"></h3>
-      <h3> Password : <input type="text" id="password" name="password"></h3>
+      <h3> Email : <input type = "email" name="email"></h3>
+      <h3> Username : <input type="text" name="username"></h3>
+      <h3> Password : <input type="password" name="password"></h3>
+      <h3>Password Confirm : <input type="password" name="password-confirm"></h3>
 
       <input type="submit" value="SignUp"> <!--submit은 form 요소 전송기능-->
     </form>
     </div>
   </body>
+
+  <script>
+    function check() {
+      if (document.getElementsByName('username')[0].value == '') {
+        alert("Name is Empty");
+        return false;
+      }
+      if (document.getElementsByName('password')[0].value == '') {
+        alert('Password is Empty');
+        return false;
+      }
+      if (document.getElementsByName('password-confirm')[0].value == '') {
+        alert('Empty password confirm!');
+        return false;
+      }
+      if (document.getElementsByName('password')[0].value != document.getElementsByName('password-confirm')[0].value) {
+        alert('incorrect password!');
+        return false;
+      }
+      return true;
+    }
+  </script>
+
 </html>
