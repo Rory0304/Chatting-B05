@@ -1,6 +1,7 @@
 /* 설치한 express와 socket.io모듈 불러오기 */
 var express = require('express');
 var socket = require('socket.io');
+var bodyParser = require('body-parser');
 
 /* Node.js 기본 내장 모듈 불러오기 */
 var http = require('http');
@@ -24,6 +25,7 @@ var io = socket(server);
 app.use('/css', express.static('./public/css'))
 app.use('/js', express.static('./public/js'))
 app.use(express.json())
+app.use(bodyParser.urlencoded({extended: false}));
 
 /* Get 방식으로 / 경로에 접속하면 실행 됨 */
 app.get('/', function(request, response) {
