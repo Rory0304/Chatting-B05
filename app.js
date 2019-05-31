@@ -52,6 +52,18 @@ app.get('/register', function(request, response) {
   })
 })
 
+app.get('/chat', function(request, response) {
+  fs.readFile('./public/chat.html', function(err, data) {
+    if(err) {
+      response.send('에러')
+    } else {
+      response.writeHead(200, {'Content-Type':'text/html'})
+      response.write(data)
+      response.end()
+    }
+  })
+})
+
 app.get('/login', function(request, response) {
   fs.readFile('./public/login.html', function(err, data) {
     if(err) {
@@ -70,7 +82,7 @@ app.post('/login', function(request,response){
   var name = request.body.username;
   var pw = request.body.password;
   console.log('success!');
-  response.redirect('')
+  response.redirect('/chat');
   // let sql = 'SELECT * FROM userinfo WHERE (username = name)';
   // db.all(sql, function(err, rows){
   //   rows.forEach(function(row){
@@ -117,7 +129,7 @@ io.sockets.on('connection', function(socket) {
   socket.on('message', function(data) {
     /* 받은 데이터에 누가 보냈는지 이름을 추가 */
     data.name = socket.name
-    
+
     console.log(data)
 
     /* 보낸 사람을 제외한 나머지 유저에게 메시지 전송 */
