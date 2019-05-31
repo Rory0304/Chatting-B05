@@ -4,17 +4,56 @@
     <meta charset="utf-8">
     <title>chatting B-05 login</title>
     <!--<link rel="stylesheet" href="/css/index.css">-->
+    <style type="text/css">
+      #top{
+        position : relative;
+        top : 100px;
+      }
+      .input{
+        width: 200px;
+        height: 35px;
+        font-size : 20px;
+      }
+      .input2{
+        width: 205px;
+        height : 35px;
+        font-size : 20px;
+        background-color: violet;
+        position : relative;
+        top : 7px;
+      }
+      .link{
+          height: 30px;
+          width: 30px;
+          background-color : rgba(255,255,255,0);
+          position: fixed;
+          right :0px;
+          top : 0px;
+          border-color: rgba(255,255,255,0);
+      }
+        .image{
+            height:30px;
+            width:30px;
+            position:fixed;
+            right:0px;
+            top:0px;
+
+        }
+    </style>
   </head>
-  <body>
-    <div align="center">
-    <form action="/login" method="POST">
+  <body STYLE="background-color: #8fff4d" >
+  <div align="center" id="top">
+      <p><span style="font-size: 80px; font-weight: bolder; color: dimgray; ">Chatting-B05</span></p>
+      <form action="/login" method="POST">
       <!--post 방식으로 접속-->
-      <h3> Username : <input type="text" id="username" name="username"></h3>
-      <h3> Password : <input type="Password" id="password" name="password"></h3>
-      <input type="submit" value="Login"> <!--submit은 form 요소 전송기능-->
-    </form>
-    <button type="button" onclick="location.href='/register'">SignIn</button>
-    </div>
+      <input type="text" id="username" name="username" placeholder="  Username" class ="input"><br>
+      <input type="Password" id="password" name="password" placeholder = "  Password" class = "input"><br>
+      <button type="submit"  class ="input2">Login</button> <!--submit은 form 요소 전송기능-->
+      </form>
+    <button type="button" onclick="location.href='/register'"  class ="input2" >SignIn</button><br>
+    <button type="button" class ="link" onclick="location.href='https://github.com/Rory0304/Chatting-B05' "><img src="./images/github-log.png" alt="git hub" class="image" ></button>
+
+  </div>
   </body>
 
 </html>

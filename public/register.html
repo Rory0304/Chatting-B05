@@ -4,17 +4,57 @@
     <meta charset="utf-8">
     <title>chatting B-05 login</title>
     <!--<link rel="stylesheet" href="/css/index.css">-->
+    <style type="text/css">
+      #top{
+        position : relative;
+        top : 108px;
+      }
+      .input{
+        width: 200px;
+        height: 35px;
+        font-size : 20px;
+      }
+      .input2{
+        width: 205px;
+        height : 35px;
+        font-size : 20px;
+        background-color: violet;
+        position : relative;
+        top : 7px;
+      }
+      table {
+        font-size: 20px;
+        width: 500px;
+      }
+    </style>
   </head>
-  <body>
-    <div align="center">
+  <body STYLE="background-color: #8fff4d">
+    <div align="center" id="top">
     <form action="/register" method="POST">
-      <!--post 방식으로 접속-->
-      <h3> Email : <input type = "email" name="email"></h3>
-      <h3> Username : <input type="text" name="username"></h3>
-      <h3> Password : <input type="password" name="password"></h3>
-      <h3>Password Confirm : <input type="password" name="password-confirm"></h3>
+      <table>
+        <caption><span style="font-size: 80px; font-weight: bolder; color: dimgray; ">Chatting-B05</span></caption>
 
-      <input type="submit" value="SignUp"> <!--submit은 form 요소 전송기능-->
+        <tbody>
+        <tr>
+          <th> Email  </th>
+          <td> <input type = "email" name="email" placeholder=" email" class = "input"></td>
+        </tr>
+        <tr>
+          <th> Username  </th>
+          <td> <input type = "text" name="username" placeholder=" username" class = "input"></td>
+        </tr>
+        <tr>
+          <th> Password  </th>
+          <td> <input type = "password" name="password" placeholder=" password" class = "input"></td>
+        </tr>
+        <tr>
+          <th> Password Confirm  </th>
+          <td> <input type = "password" name="password-confirm" placeholder=" password" class = "input"></td>
+        </tr>
+        </tbody>
+      </table>
+      <!--post 방식으로 접속-->
+      <button type="submit"  class ="input2">SignUp</button><!--submit은 form 요소 전송기능-->
     </form>
     </div>
   </body>
