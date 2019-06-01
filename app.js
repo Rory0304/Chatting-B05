@@ -81,36 +81,34 @@ app.get('/login', function(request, response) {
 app.post('/login', function(request,response){
   var name = request.body.username;
   var pw = request.body.password;
-  console.log('success!');
-  response.redirect('/chat');
-  // let sql = 'SELECT * FROM userinfo WHERE (username = name)';
-  // db.all(sql, function(err, rows){
-  //   rows.forEach(function(row){
-  //     if(row.password==pw){
-  //       response.redirect('/chat');
-  //     }
-  //     else{
-  //       response.send('일치하는 정보가 존재하지 않습니다.');
-  //     }
-  //   })
-  // })
-  // db.close();
-})
-
-app.post('/register', function(request, response){
-  console.log('i am in re:gister')
-  db.run('INSERT INTO userinfo(email,username,password) values("${request.body.email}","${request.body.username}","${requset.body.password}")',function(err){
-    if(err){
-      return console.log(err.message);
-    }
-    console.log('Rows inserted',  request.body.email, request.body.username, request.body.password);
-    response.redirect('/login');
-    db.close();
+  let sql = 'SELECT * FROM userinfo WHERE username=?';
+  db.get(sql, name, (err, row) => {
+  if (err) {
+    return console.error(err.message);
+  }
+  if(row) {
+    console.log(row.username, row.password)
+	response.redirect('/chat') }
+  else {
+    consloe.log('login err'); }
   })
 })
 
-
-
+app.post('/register', function(request, response){
+  var name = request.body.username;
+  var pw = request.body.password;
+  var e = request.body.email;
+  var user = [e,name,pw];
+  var sql = 'INSERT INTO userinfo VALUES (?,?,?)';
+  console.log('i am in register')
+  db.run(sql, user, function(err){
+    if(err){
+      return console.log(err.message);
+    }
+    console.log('Rows inserted', name, pw);
+	response.redirect('/login');
+  })
+})
 
 io.sockets.on('connection', function(socket) {
 
