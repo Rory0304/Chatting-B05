@@ -90,7 +90,8 @@ app.post('/login', function(request,response){
     console.log(row.username, row.password)
 	response.redirect('/chat') }
   else {
-    consloe.log('login err'); }
+    console.log('login err')
+	response.redirect('/login') }
   })
 })
 
