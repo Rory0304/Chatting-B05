@@ -46,7 +46,7 @@
   </head>
   <body STYLE="background-color: #a0e5ff">
     <div align="center" id="top">
-    <form action="/register" method="POST">
+    <form action="/register" method="POST" onsubmit="return check()">
       <table>
         <caption><span style="font-size: 80px; font-weight: bolder; color: dimgray; ">Chatting-B05</span></caption>
 
@@ -80,11 +80,11 @@
   <script>
     function check() {
       if (document.getElementsByName('username')[0].value == '') {
-        alert("Name is Empty");
+        alert("username is Empty");
         return false;
       }
       if (document.getElementsByName('password')[0].value == '') {
-        alert('Password is Empty');
+        alert('password is Empty');
         return false;
       }
       if (document.getElementsByName('password-confirm')[0].value == '') {

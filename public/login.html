@@ -43,7 +43,7 @@
   <body STYLE="background-color: #a0e5ff  " >
   <div align="center" id="top">
       <p><span style="font-size: 80px; font-weight: bolder; color: dimgray; ">Chatting-B05</span></p>
-      <form action="/login" method="POST">
+      <form action="/login" method="POST" onsubmit="return check()">
       <!--post 방식으로 접속-->
       <input type="text" id="username" name="username" placeholder="  Username" class ="input"><br>
       <input type="Password" id="password" name="password" placeholder = "  Password" class = "input"><br>
@@ -54,5 +54,19 @@
 
   </div>
   </body>
+
+  <script>
+    function check() {
+      if (document.getElementsByName('username')[0].value == '') {
+        alert("username is Empty");
+        return false;
+      }
+      if (document.getElementsByName('password')[0].value == '') {
+        alert('password is Empty');
+        return false;
+      }
+      return true;
+    }
+  </script>
 
 </html>
