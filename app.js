@@ -11,7 +11,7 @@ var server = http.createServer(app);
 var io = socket(server);
 
 let db = new sqlite.Database('userinfo.db');
-db.run('CREATE TABLE IF NOT EXISTS userinfo(email text NOT NULL UNIQUE,username text NOT NULL UNIQUE,password text NOT NULL)');
+db.run('CREATE TABLE IF NOT EXISTS userinfo(email text UNIQUE,username text PRIMARY KEY,password text NOT NULL)');
 
 // app.use(cookieParser()); //사용자의 쿠키 내역 가져옴.
 app.use('/css', express.static('./public/css'))
@@ -73,13 +73,14 @@ app.post('/register', function(request, response){
   console.log('i am in register')
   db.run(sql, user,function(err){
     if(err){
-      return console.log(err.message);
+	  response.redirect('/register');
     }
-    console.log('Rows inserted', name, pw);
-	response.redirect('/login');
+    else{
+      console.log('Rows inserted', name, pw);
+	  response.redirect('/login');
+	}
   })
 })
-
 
 io.sockets.on('connection', function(socket) {
   /* 새로운 유저가 접속했을 경우 다른 소켓에게도 알려줌 */
