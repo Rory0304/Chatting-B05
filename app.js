@@ -11,7 +11,7 @@ var server = http.createServer(app);
 var io = socket(server);
 
 let db = new sqlite.Database('userinfo.db');
-db.run('CREATE TABLE IF NOT EXISTS userinfo(email text UNIQUE,username text PRIMARY KEY,password text NOT NULL)');
+db.run('CREATE TABLE IF NOT EXISTS userinfo(email text,username text PRIMARY KEY,password text NOT NULL)');
 
 // app.use(cookieParser()); //사용자의 쿠키 내역 가져옴.
 app.use('/css', express.static('./public/css'))
