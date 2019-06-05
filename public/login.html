@@ -2,7 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>chatting B-05 login</title>
+    <title>chatting-B05 login</title>
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
     <!--<link rel="stylesheet" href="/css/index.css">-->
     <style type="text/css">
       #top{
@@ -25,7 +26,7 @@
       .input_button:hover{
         color: #eeeeee ;
         background-color: #a766a7 ;
-        
+
       }
       .link{
           height: 30px;
@@ -43,12 +44,18 @@
             right:0px;
             top:0px;
         }
-        
+        p.a{
+          font-family: 'Lobster', cursive;
+          color : orange;
+          font-size:80px;
+        }
+
     </style>
   </head>
   <body STYLE="background-color: #a0e5ff  " >
   <div align="center" id="top" >
-      <p><img src="https://github.com/Rory0304/Chatting-B05/blob/master/public/images/chat-logo.png?raw=true" alt="chat-logo" height =85px width=auto ></p>
+    <p class="a">chatting B-05</p>
+      <!--<p><img src="https://github.com/Rory0304/Chatting-B05/blob/master/public/images/chat-logo.png?raw=true" alt="chat-logo" height =85px width=auto ></p>-->
       <form action="/login" method="POST" onsubmit="return check()">
       <!--post 방식으로 접속-->
       <input type="text" id="username" name="username" placeholder="  Username" class ="input"><br>

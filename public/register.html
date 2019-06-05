@@ -71,7 +71,7 @@
         </tr>
         <tr>
           <th> Password Confirm  </th>
-          <td> <input type = "password" name="password-confirm" placeholder=" password" class = "input"></td>
+          <td> <input type = "password" name="confirm" placeholder=" password" class = "input"></td>
         </tr>
         </tbody>
       </table>
@@ -93,7 +93,7 @@
         alert('password is Empty');
         return false;
       }
-      if (document.getElementsByName('password-confirm')[0].value == '') {
+      if (document.getElementsByName('confirm')[0].value == '') {
         alert('Empty password confirm!');
         return false;
       }

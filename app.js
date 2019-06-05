@@ -4,14 +4,27 @@ var socket = require('socket.io');
 var bodyParser = require('body-parser');
 var http = require('http');
 var fs = require('fs');
-var sqlite = require('sqlite3').verbose();
-
+var mysql = require('mysql');
 var app = express();
 var server = http.createServer(app);
 var io = socket(server);
 
-let db = new sqlite.Database('userinfo.db');
-db.run('CREATE TABLE IF NOT EXISTS userinfo(email text,username text PRIMARY KEY,password text NOT NULL)');
+
+var connection = mysql.createConnection({
+	hostname: 'userinfo',
+  port: 3306,
+	user: 'root',
+	password: '',
+	database: 'info'
+});
+
+connection.connect(function(err){
+	if(err){
+		console.error('connect error: ' + err.stack);
+		return;
+	}
+	console.log('Success DB connection');
+});
 
 // app.use(cookieParser()); //사용자의 쿠키 내역 가져옴.
 app.use('/css', express.static('./public/css'))
@@ -40,46 +53,70 @@ app.get('/login', function(req, res){
   res.render('login.html')
 })
 
+// app.post('/login', function(request,response){
+//   var name = request.body.username;
+//   var pw = request.body.password;
+//   let sql = 'SELECT * FROM userinfo WHERE username like ?';
+//   db.get(sql, [name], (err, row) => {
+//   if (err) {
+//     return console.error(err.message);
+//   }
+//   if(row) {			//아이디 등록이 되어있을 때
+//     if(row.password !== pw){ 		//비밀번호가 다를때
+//       console.log('password err')
+//       console.log(row.password, pw)
+//       response.redirect('/login')
+//     }
+//     else { 			//비밀번호가 같을 때
+//       console.log(row.username, row.password, pw)
+//       response.render('chat.html',{username: request.body.username}) }
+//     } //이름 정보를 html에 보냄
+//   else {		//아이디 등록이 안되있을 때
+//     console.log('id err..')
+//     response.redirect('/login') }
+//   })
+// })
+
 app.post('/login', function(request,response){
   var name = request.body.username;
   var pw = request.body.password;
-  let sql = 'SELECT * FROM userinfo WHERE username like ?';
-  db.get(sql, [name], (err, row) => {
-  if (err) {
-    return console.error(err.message);
-  }
-  if(row) {			//아이디 등록이 되어있을 때
-    if(row.password !== pw){ 		//비밀번호가 다를때
-      console.log('password err')
-      console.log(row.password, pw)
-      response.redirect('/login')
+
+  var sql = 'SELECT * FROM user WHERE username = ?';
+  connection.query(sql, [name], function(error, results, fields){
+    if(results.length == 0){
+      response.render('login.html');
     }
-    else { 			//비밀번호가 같을 때
-      console.log(row.username, row.password, pw)
-      response.render('chat.html',{username: request.body.username}) }
-    } //이름 정보를 html에 보냄
-  else {		//아이디 등록이 안되있을 때
-    console.log('id err..')
-    response.redirect('/login') }
+    else{
+      var db_name = results[0].username;
+      var db_pw = results[0].password;
+
+      if(db_pw == pw){
+        console.log('Success')
+        response.render('chat.html',{username: request.body.username});
+      }else {
+        console.log('fail')
+        response.render('login.html');
+      }
+    }
   })
 })
 
 app.post('/register', function(request, response){
   var name = request.body.username;
   var pw = request.body.password;
+  var conf = request.body.confirm;
   var e = request.body.email;
-  var user = [e,name,pw];
-  var sql = 'INSERT INTO userinfo VALUES (?,?,?)';
-  console.log('i am in register')
-  db.run(sql, user,function(err){
-    if(err){
-	  response.redirect('/register');
-    }
-    else{
-      console.log('Rows inserted', name, pw);
-	  response.redirect('/login');
+
+  if(pw == conf){
+		var sql = `INSERT INTO user VALUES(?, ?, ?)`;
+		connection.query(sql, [e, name, pw], function(error, results, fields){
+	   });
+    // response.render('login.html')
+		response.render('login.html');
 	}
-  })
+	else{
+		response.render('register.html');
+	}
 })
 
 io.sockets.on('connection', function(socket) {
