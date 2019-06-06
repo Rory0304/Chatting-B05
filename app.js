@@ -11,7 +11,7 @@ var io = socket(server);
 
 
 var connection = mysql.createConnection({
-	hostname: 'localhost',
+	host: 'localhost',
   port: 3306,
 	user: 'newuser',
 	password: 'your_new_password',
