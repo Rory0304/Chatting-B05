@@ -15,7 +15,7 @@ function createWindow () {
     resizable: false,
     width: 900,
     height: 640,
-    title: "Gradios",
+    title: "Chatting B-05",
     frame: true,
     webPreferences: {
       nativeWindowOpen: true,
@@ -34,24 +34,7 @@ function createWindow () {
   })
 }
 
-// function createWindow () {
-//   // 브라우저 창을 생성합니다.
-//   win = new BrowserWindow({
-//     width: 800,
-//     height: 600,
-//     webPreferences: {
-//       nodeIntegration: true
-//     }
-//       mainWindow.loadURL('http://localhost:8080');
-//
-//     mainWindow.on('closed', function () {
-//    // Dereference the window object, usually you would store windows
-//    // in an array if your app supports multi windows, this is the time
-//    // when you should delete the corresponding element.
-//    mainWindow = null
-//  })
-  // 개발자 도구를 엽니다.
-  // 창이 닫힐 때 발생합니다
+
   app.on('closed', () => {
     // window 객체에 대한 참조해제. 여러 개의 창을 지원하는 앱이라면
     // 창을 배열에 저장할 수 있습니다. 이곳은 관련 요소를 삭제하기에 좋은 장소입니다.
