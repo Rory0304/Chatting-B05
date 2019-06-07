@@ -1,57 +1,81 @@
-const {app, BrowserWindow} = require('electron')
 
+// Modules to control application life and create native browser window
+const {app, Menu, shell, BrowserWindow} = require('electron');
+const url = require('url');
 
-  const path = require('path')
-  const url = require('url')
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let mainWindow;
+const { fork } = require('child_process')
+const ps = fork(`${__dirname}/app.js`)
 
-  // Keep a global reference of the window object, if you don't, the window will
-  // be closed automatically when the JavaScript object is garbage collected.
-  let win
+function createWindow () {
+  // Create the browser window.
+  mainWindow = new BrowserWindow({
+    resizable: false,
+    width: 900,
+    height: 640,
+    title: "Gradios",
+    frame: true,
+    webPreferences: {
+      nativeWindowOpen: true,
+      nodeIntegration: false
+    }
+  })
+  mainWindow.loadURL('http://localhost:8080');
 
-  function createWindow () {
-    // Create the browser window.
-    win = new BrowserWindow({width: 800, height: 600})
+  //mainWindow.webContents.openDevTools();
+  // Emitted when the window is closed.
+  mainWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null
+  })
+}
 
-    // and load the index.html of the app.
-    win.loadURL(url.format({
-      pathname: path.join(__dirname, './public/login.html'),
-      protocol: 'file:',
-      slashes: true
-    }))
+// function createWindow () {
+//   // 브라우저 창을 생성합니다.
+//   win = new BrowserWindow({
+//     width: 800,
+//     height: 600,
+//     webPreferences: {
+//       nodeIntegration: true
+//     }
+//       mainWindow.loadURL('http://localhost:8080');
+//
+//     mainWindow.on('closed', function () {
+//    // Dereference the window object, usually you would store windows
+//    // in an array if your app supports multi windows, this is the time
+//    // when you should delete the corresponding element.
+//    mainWindow = null
+//  })
+  // 개발자 도구를 엽니다.
+  // 창이 닫힐 때 발생합니다
+  app.on('closed', () => {
+    // window 객체에 대한 참조해제. 여러 개의 창을 지원하는 앱이라면
+    // 창을 배열에 저장할 수 있습니다. 이곳은 관련 요소를 삭제하기에 좋은 장소입니다.
+    mainWindow = null
+  })
 
-    // Open the DevTools.
-    win.webContents.openDevTools()
+// 이 메서드는 Electron이 초기화를 마치고
+// 브라우저 창을 생성할 준비가 되었을 때  호출될 것입니다.
+// 어떤 API는 이 이벤트가 나타난 이후에만 사용할 수 있습니다.
+app.on('ready', createWindow)
 
-    // Emitted when the window is closed.
-    win.on('closed', () => {
-      // Dereference the window object, usually you would store windows
-      // in an array if your app supports multi windows, this is the time
-      // when you should delete the corresponding element.
-      win = null
-    })
+// 모든 창이 닫혔을 때 종료.
+app.on('window-all-closed', () => {
+  // macOS에서는 사용자가 명확하게 Cmd + Q를 누르기 전까지는
+  // 애플리케이션이나 메뉴 바가 활성화된 상태로 머물러 있는 것이 일반적입니다.
+  if (process.platform !== 'darwin') {
+    app.quit()
   }
+})
 
-  // This method will be called when Electron has finished
-  // initialization and is ready to create browser windows.
-  // Some APIs can only be used after this event occurs.
-  app.on('ready', createWindow)
-
-  // Quit when all windows are closed.
-  app.on('window-all-closed', () => {
-    // On macOS it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
-    if (process.platform !== 'darwin') {
-      app.quit()
-    }
-  })
-
-  app.on('activate', () => {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (win === null) {
-      createWindow()
-    }
-  })
-
-  // In this file you can include the rest of your app's specific main process
-  // code. You can also put them in separate files and require them here.
+app.on('activate', () => {
+  // macOS에서는 dock 아이콘이 클릭되고 다른 윈도우가 열려있지 않았다면
+  // 앱에서 새로운 창을 다시 여는 것이 일반적입니다.
+  if (mainWindow === null) {
+    createWindow()
+  }
+})

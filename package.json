@@ -2,19 +2,20 @@
   "name": "chatting-b05",
   "version": "1.0.0",
   "description": "2019 OS chatting program",
-  "main": "app.js",
+  "main": "main.js",
   "dependencies": {
     "ejs": "^2.6.1",
     "express": "^4.17.1",
     "mysql": "^2.17.1",
-    "socket.io": "^2.2.0",
-    "sqlite3": "^4.0.8"
-  },
-  "devDependencies": {
-    "electron": "^5.0.2"
+    "socket.io": "^2.2.0"
   },
   "scripts": {
     "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^5.0.2",
+    "electron-packager": "^13.1.1",
+    "yarn": "^1.16.0"
   },
   "repository": {
     "type": "git",
