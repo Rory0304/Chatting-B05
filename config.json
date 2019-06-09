@@ -1,7 +1,0 @@
-{
-  "host": "chattingb05.cwgjg4zrhrb6.ap-northeast-1.rds.amazonaws.com",
-  "post": 3306,
-  "user": "newuser",
-  "password": "mypassword",
-  "database": "chattingb05"
-}
