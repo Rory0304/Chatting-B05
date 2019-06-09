@@ -10,7 +10,11 @@
     "socket.io": "^2.2.0"
   },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-packager . --out=dist --asar --overwite --all",
+    "build:darwin": "electron-packager . --out=dist --asar --overwite --platfrom=darwin",
+    "build:linux": "electron-packager . gradios --platform linux --out dist/",
+    "build:windows": "electron-packager . gradios --platform win32 --out dist/"
   },
   "devDependencies": {
     "electron": "^5.0.2",
