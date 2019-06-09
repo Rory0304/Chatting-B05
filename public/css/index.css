@@ -1,11 +1,11 @@
 #main {
   margin: auto;
   margin-top: 45px;
-  border-radius: 10px;
+  border-radius: 5px;
   text-align: center;
-  background-color: #d192ff;
-  width: 700px;
-  height: 500px;
+  background-color: #a0e5ff;
+  width: 800px;
+  height: 440px;
 }
 
 /* 채팅 영역 */
@@ -18,8 +18,12 @@
 .connect {
   width: 90%;
   margin: auto;
-  background-color: yellow;
-  border-radius: 5px;
+  background: #ffffff;
+  background: rgba(255, 255, 255, 0.5);
+
+  /* background-color: yellow; */
+  /* opacity: 50; */
+  border-radius: 3px;
   text-align: center;
   margin-top: 8px;
 }

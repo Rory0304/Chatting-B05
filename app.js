@@ -8,13 +8,19 @@ var app = express();
 var server = http.createServer(app);
 var io = socket(server);
 
+var config  = require('./config.json');
 
 var connection = mysql.createConnection({
-	host: 'chattingb05.cwgjg4zrhrb6.ap-northeast-1.rds.amazonaws.com',
-  post: 3306,
-	user: 'newuser',
-	password: 'mypassword',
-	database: 'chattingb05'
+	host: config.host,
+  post: config.post,
+	user: config.user,
+	password: config.password,
+	database: config.database
+	// host: 'chattingb05.cwgjg4zrhrb6.ap-northeast-1.rds.amazonaws.com',
+  // post: 3306,
+	// user: 'newuser',
+	// password: 'mypassword',
+	// database: 'chattingb05'
 });
 
 connection.connect(function(err){
