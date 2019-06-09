@@ -41,9 +41,6 @@
 /* 내가 보낸 메시지 */
 .me {
   max-width: 560px;
-  width: intrinsic;
-  width : -moz-max-content;
-  width:-webkit-max-content;
   width : max-content;
  
   margin: auto;
@@ -59,11 +56,7 @@
 
 /* 상대방이 보낸 메시지 */
 .other {
-  position: relative;
   max-width: 560px;
-  width: intrinsic;
-  width : -moz-max-content;
-  width:-webkit-max-content;
   width : max-content;
   margin: auto;
   margin-left: 5%;
