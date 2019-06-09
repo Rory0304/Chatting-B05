@@ -13,9 +13,9 @@ var io = socket(server);
 var connection = mysql.createConnection({
 	host: 'localhost',
   post: 3306,
-	user: 'newuser',
-	password: 'your_new_password',
-	database: 'info'
+	user: 'root',
+	password: 'pw',
+	database: 'userinfo'
 });
 
 connection.connect(function(err){
@@ -80,17 +80,22 @@ app.post('/register', function(request, response){
   var pw = request.body.password;
   var conf = request.body.confirm;
   var e = request.body.email;
-
-  if(pw == conf){
+  var sql = 'SELECT * FROM user WHERE username = ?';
+  connection.query(sql,[name], function(error, results, fields){
+	if(results.length == 0){
+      if(pw == conf){
 		var sql = `INSERT INTO user VALUES(?, ?, ?)`;
-		connection.query(sql, [e, name, pw], function(error, results, fields){
-	   });
-    // response.render('login.html')
+		connection.query(sql, [e, name, pw]);
 		response.render('login.html');
+	  }
+	  else{  //비밀번호 확인 오류
+	    response.render('register.html');
+	  }
 	}
-	else{
-		response.render('register.html');
+    else{  // 사용중인 아이디일 경우
+	  response.render('register.html');
 	}
+  })
 })
 
 io.sockets.on('connection', function(socket) {
