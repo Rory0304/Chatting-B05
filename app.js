@@ -1,4 +1,3 @@
-
 var express = require('express');
 var socket = require('socket.io');
 var bodyParser = require('body-parser');
@@ -11,11 +10,11 @@ var io = socket(server);
 
 
 var connection = mysql.createConnection({
-	host: 'localhost',
+	host: 'chattingb05.cwgjg4zrhrb6.ap-northeast-1.rds.amazonaws.com',
   post: 3306,
 	user: 'newuser',
-	password: 'your_new_password',
-	database: 'info'
+	password: 'mypassword',
+	database: 'chattingb05'
 });
 
 connection.connect(function(err){
