@@ -40,10 +40,15 @@
 
 /* 내가 보낸 메시지 */
 .me {
-  width: 90%;
+  max-width: 560px;
+  width : max-content;
+ 
   margin: auto;
+  margin-right: 5%;
+  overflow:hidden;
+  word-wrap:break-word;
   background-color: #8fff4d;
-  text-align: right;
+  text-align: left;
   padding-top: 2px;
   border-radius: 5px;
   margin-top: 8px;
@@ -51,8 +56,12 @@
 
 /* 상대방이 보낸 메시지 */
 .other {
-  width: 90%;
+  max-width: 560px;
+  width : max-content;
   margin: auto;
+  margin-left: 5%;
+  overflow:hidden;
+  word-wrap:break-word;
   background-color: white;
   text-align: left;
   border-radius: 5px;
