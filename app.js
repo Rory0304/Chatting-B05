@@ -32,11 +32,13 @@ connection.connect(function(err){
 });
 
 // app.use(cookieParser()); //사용자의 쿠키 내역 가져옴.
-app.use('/css', express.static('./public/css'))
-app.use('/js', express.static('./public/js'))
+
+app.use('/css', express.static(__dirname +'/public/css'))
+app.use('/js', express.static(__dirname +'/public/js'))
+app.set('views', __dirname + '/public');
+
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.set('views', __dirname + '/public');
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
 
