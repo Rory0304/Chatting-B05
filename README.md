@@ -1,7 +1,7 @@
 # Chatting-B05
 2019 OS chatting web application
 
-  **npm run buil: 버전**
+  **npm run build: 버전**
 
   "build": "npm run build:linux && npm run build:osx && npm run build:win",
   
