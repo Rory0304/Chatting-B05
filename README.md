@@ -1,6 +1,6 @@
 # Chatting-B05
-2019 OS chatting web application. 
-
+2019 SIMPLE chatting web application. 
+<center><img width="300" alt="logo" src="https://github.com/Rory0304/Chatting-B05/blob/master/%EA%B7%B8%EB%A6%BC1.png"></center>
 
 ## 톡오조
 이름 | 분야 | 담당 
@@ -10,9 +10,14 @@
 `박성수` | frontend  | 디자인
 `장윤호` | research | 라이센스 
 
+## DEMO
+<center><img width="600" alt="capt1" src="https://github.com/Rory0304/Chatting-B05/blob/master/%EA%B7%B8%EB%A6%BC3.png"></center>
+<center><img width="600" alt="capt2" src="https://github.com/Rory0304/Chatting-B05/blob/master/%EA%B7%B8%EB%A6%BC2.png"></center>
+
 ## Installation
+You can install electron web application
 - git clone
-- open the terminal and go to the directory
+- open the terminal and go to your directory
 ```
 npm i
 npm run build: "your os version"
